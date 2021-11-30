@@ -10,7 +10,7 @@ import { TWEETS_STORAGE } from "./utils/Constants";
 function App() {
   const [toastProps, setToastProps] = useState({
     open: false,
-    text: null
+    text: null,
   });
 
   const [allTweets, setAllTweets] = useState([]);
@@ -24,7 +24,7 @@ function App() {
     setReloadTweet(false);
   }, [reloadTweet]);
 
-  const deleteTweet = index => {
+  const deleteTweet = (index) => {
     allTweets.splice(index, 1);
     setAllTweets(allTweets);
     localStorage.setItem(TWEETS_STORAGE, JSON.stringify(allTweets));
@@ -34,18 +34,22 @@ function App() {
   return (
     <Container className="tweets-simulator" maxWidth={false}>
       <Header />
-      <SendTweet setToastProps={setToastProps} allTweets={allTweets} />
+      <SendTweet
+        setToastProps={setToastProps}
+        setReloadTweet={setReloadTweet}
+        allTweets={allTweets}
+      />
       <ListTweets allTweets={allTweets} deleteTweet={deleteTweet} />
       <Snackbar
         anchorOrigin={{
           vertical: "top",
-          horizontal: "right"
+          horizontal: "right",
         }}
         open={toastProps.open}
         autoHideDuration={2000}
         onClose={() =>
           setToastProps({
-            open: false
+            open: false,
           })
         }
         message={<span id="message-id">{toastProps.text}</span>}

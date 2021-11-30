@@ -9,7 +9,7 @@ import { TWEETS_STORAGE } from "../../utils/Constants";
 import "./SendTweet.scss";
 
 export default function SendTweet(props) {
-  const { setToastProps, allTweets } = props;
+  const { setToastProps, allTweets, setReloadTweet } = props;
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const openModal = () => {
@@ -33,7 +33,7 @@ export default function SendTweet(props) {
     if (!name || !tweet) {
       setToastProps({
         open: true,
-        text: "WARNING: Todos los campos son obligatorios"
+        text: "WARNING: Todos los campos son obligatorios",
       });
     } else {
       formValue.time = moment();
@@ -41,8 +41,9 @@ export default function SendTweet(props) {
       localStorage.setItem(TWEETS_STORAGE, JSON.stringify(allTweetArray));
       setToastProps({
         open: true,
-        text: "Tweet enviado correctamente"
+        text: "Tweet enviado correctamente",
       });
+      setReloadTweet(true);
       closeModal();
     }
     allTweetArray = [];
